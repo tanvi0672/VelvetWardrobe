@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const u = getCurrentUser();
     if (u) {
-      fetch(`/api/user/${encodeURIComponent(u)}/data`, {
+      fetch(`https://velvetwardrobe.onrender.com/api/user/${encodeURIComponent(u)}/data`, {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ favorites: list })
       }).catch(() => {});
@@ -262,7 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const u = getCurrentUser();
     if (!u) { hydrateFavouriteButtons(); return; }
     try {
-      const res = await fetch(`/api/user/${encodeURIComponent(u)}/data`);
+      const res = await fetch(` https://velvetwardrobe.onrender.com/api/user/${encodeURIComponent(u)}/data`);
       const j = await res.json();
       if (j && j.success && j.data) {
         // populate localStorage user-scoped keys
@@ -473,7 +473,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // attempt server sync
       try {
-        await fetch(`/api/user/${encodeURIComponent(currentUser)}/data`, {
+        await fetch(`https://velvetwardrobe.onrender.com/api/user/${encodeURIComponent(currentUser)}/data`, {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ feedback: JSON.parse(localStorage.getItem(userKey('velvet_feedback')) || '[]') })
         });
@@ -517,7 +517,7 @@ document.addEventListener('DOMContentLoaded', () => {
     showToast('Registering user...', 'info');
 
     // 3. API Integration (Backend Call)
-    fetch('http://127.0.0.1:5000/register', {
+    fetch(' https://velvetwardrobe.onrender.com/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
