@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Favourites — VelvetWardrobe</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { padding: 1rem; }
+    .fav-container { max-width: 520px; margin: 0 auto; }
+    .fav-item { display:flex; gap:12px; align-items:center; padding:10px 0; border-bottom:1px solid rgba(0,0,0,0.06); }
+    .fav-item img { width:84px; height:84px; object-fit:cover; border-radius:8px; }
+    .meta h4 { margin:0 0 6px 0; font-size:1rem; }
+    .meta small { color:var(--muted); }
+    .fav-actions { display:flex; gap:8px; margin-top:8px; }
+  </style>
+</head>
+<body>
+  <div class="fav-container">
+    <header style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+      <h2>Saved Favourites</h2>
+      <button id="close-btn" class="icon-btn" aria-label="Close">✕</button>
+    </header>
+
+    <main>
+      <div id="fav-list"></div>
+      <div id="empty" style="color:var(--muted);text-align:center;padding:2rem 0;">No favourites yet.</div>
+
+      <div id="controls" style="display:none;margin-top:1rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div style="color:var(--muted)">Manage your saved items</div>
+        </div>
+        <div style="margin-top:12px;display:flex;gap:8px;">
+          <button id="clear-btn" class="btn ghost">Clear favourites</button>
+          <button id="add-all-cart" class="btn primary">Add all to cart</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const getCurrentUser = () => { try { return localStorage.getItem('velvet_user'); } catch (e) { return null; } };
+    const userKey = (base) => { const u = getCurrentUser(); return u ? `${base}:${u}` : base; };
+
+    const getFavourites = () => { const key = userKey('velvet_favorites'); try { return JSON.parse(localStorage.getItem(key)) || []; } catch (e) { return []; } };
+    const saveFavourites = (list) => { const key = userKey('velvet_favorites'); localStorage.setItem(key, JSON.stringify(list)); try { localStorage.setItem(key + '_updated_at', Date.now()); } catch (e) {};
+      const u = getCurrentUser(); if (u) fetch(`/api/user/${encodeURIComponent(u)}/data`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ favorites: list }) }).catch(()=>{});
+    };
+    const getCart = () => { const key = userKey('velvet_cart'); try { return JSON.parse(localStorage.getItem(key)) || []; } catch (e) { return []; } };
+    const saveCart = (list) => { const key = userKey('velvet_cart'); localStorage.setItem(key, JSON.stringify(list)); try { localStorage.setItem(key + '_updated_at', Date.now()); } catch (e) {};
+      const u = getCurrentUser(); if (u) fetch(`/api/user/${encodeURIComponent(u)}/data`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ cart: list }) }).catch(()=>{});
+    };
+
+    const $list = document.getElementById('fav-list');
+    const $empty = document.getElementById('empty');
+    const $controls = document.getElementById('controls');
+
+    function formatINR(n){ try{ return '₹' + Number(n).toLocaleString('en-IN'); }catch(e){ return '₹' + n; } }
+
+    function render() {
+      const favs = getFavourites();
+      $list.innerHTML = '';
+      if (!favs.length) { $empty.style.display = 'block'; $controls.style.display = 'none'; return; }
+      $empty.style.display = 'none'; $controls.style.display = 'block';
+
+      favs.forEach((item) => {
+        const row = document.createElement('div'); row.className = 'fav-item';
+        const img = document.createElement('img'); img.src = item.image || ''; img.alt = item.name || 'Item';
+        const meta = document.createElement('div'); meta.className = 'meta';
+        const title = document.createElement('h4'); title.textContent = item.name || 'Item';
+        const price = document.createElement('div'); price.innerHTML = `<small style="color:var(--muted)">Price: ${formatINR(item.price || 0)}</small>`;
+
+        const actions = document.createElement('div'); actions.className = 'fav-actions';
+        const remove = document.createElement('button'); remove.className = 'btn ghost'; remove.textContent = 'Remove';
+        remove.addEventListener('click', () => { removeItem(item); });
+        const addToCart = document.createElement('button'); addToCart.className = 'btn primary'; addToCart.textContent = 'Add to cart';
+        addToCart.addEventListener('click', () => { addToCartSingle(item); });
+
+        actions.appendChild(addToCart); actions.appendChild(remove);
+        meta.appendChild(title); meta.appendChild(price); meta.appendChild(actions);
+        row.appendChild(img); row.appendChild(meta);
+        $list.appendChild(row);
+      });
+    }
+
+    function removeItem(item) {
+      const favs = getFavourites().filter(f => !(f.name === item.name && Number(f.price) === Number(item.price) && f.image === item.image));
+      saveFavourites(favs); render();
+    }
+
+    function clearFavourites() { if (!confirm('Clear all favourites?')) return; saveFavourites([]); render(); }
+
+    function addToCartSingle(item) {
+      const cart = getCart();
+      const existing = cart.find(c => c.name === item.name && Number(c.price) === Number(item.price) && c.image === item.image);
+      if (existing) existing.quantity = (existing.quantity || 1) + 1; else cart.push({ ...item, quantity: 1, id: Date.now().toString(36) });
+      saveCart(cart);
+      alert(`${item.name} added to cart.`);
+    }
+
+    function addAllToCart() {
+      const favs = getFavourites(); if (!favs.length) return alert('No favourites to add.');
+      const cart = getCart();
+      favs.forEach(item => {
+        const existing = cart.find(c => c.name === item.name && Number(c.price) === Number(item.price) && c.image === item.image);
+        if (existing) existing.quantity = (existing.quantity || 1) + 1; else cart.push({ ...item, quantity: 1, id: Date.now().toString(36) + Math.random().toString(36).slice(2,6) });
+      });
+      saveCart(cart);
+      alert('All favourites added to cart.');
+    }
+
+    document.getElementById('clear-btn').addEventListener('click', clearFavourites);
+    document.getElementById('add-all-cart').addEventListener('click', addAllToCart);
+    document.getElementById('close-btn').addEventListener('click', () => window.close());
+
+    window.addEventListener('storage', (e) => {
+      if (!e.key) return;
+      const u = getCurrentUser(); if (!u) return;
+      if (e.key.startsWith(`velvet_favorites:${u}`) || e.key === `velvet_favorites:${u}_updated_at`) render();
+      if (e.key.startsWith(`velvet_cart:${u}`) || e.key === `velvet_cart:${u}_updated_at`) {
+        // cart changed elsewhere
+      }
+    });
+
+    render();
+  </script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Your Cart — VelvetWardrobe</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Small cart-specific tweaks */
+    body { padding: 1rem; }
+    .cart-container { max-width: 420px; margin: 0 auto; }
+    .cart-item { display:flex; gap:12px; align-items:center; padding:10px 0; border-bottom:1px solid rgba(0,0,0,0.06); }
+    .cart-item img { width:72px; height:72px; object-fit:cover; border-radius:8px; }
+    .cart-item .meta { flex:1; }
+    .cart-item .meta h4 { margin:0 0 6px 0; font-size:1rem; }
+    .cart-footer { margin-top:1rem; display:flex; gap:8px; flex-direction:column; }
+    .cart-actions { display:flex; gap:8px; }
+  </style>
+</head>
+<body>
+  <div class="cart-container">
+    <header style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+      <h2>Your Cart</h2>
+      <button id="close-btn" class="icon-btn" aria-label="Close">✕</button>
+    </header>
+
+    <main>
+      <div id="cart-list" aria-live="polite"></div>
+
+      <div id="empty" style="color:var(--muted);text-align:center;padding:2rem 0;">Your cart is empty.</div>
+
+      <div id="summary" style="display:none;margin-top:1rem;">
+        <div style="display:flex;justify-content:space-between;padding:8px 0;"><strong>Subtotal</strong><span id="subtotal">₹0</span></div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;color:var(--muted)"><small>Estimated taxes & shipping at checkout</small><span></span></div>
+        <div class="cart-footer">
+          <div class="cart-actions">
+            <button id="buy-now-btn" class="btn primary wide">Buy Now</button>
+            <button id="clear-btn" class="btn ghost">Clear</button>
+          </div>
+          <button id="continue-btn" class="btn ghost">Continue shopping</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const getCurrentUser = () => { try { return localStorage.getItem('velvet_user'); } catch (e) { return null; } };
+    const userKey = (base) => { const u = getCurrentUser(); return u ? `${base}:${u}` : base; };
+
+    const getCart = () => {
+      const key = userKey('velvet_cart');
+      try { return JSON.parse(localStorage.getItem(key)) || []; } catch (e) { return []; }
+    };
+
+    const saveCart = (cart) => {
+      const key = userKey('velvet_cart');
+      localStorage.setItem(key, JSON.stringify(cart));
+      try { localStorage.setItem(key + '_updated_at', Date.now()); } catch (e) {}
+      const u = getCurrentUser();
+      if (u) {
+        fetch(`/api/user/${encodeURIComponent(u)}/data`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ cart }) }).catch(()=>{});
+      }
+    };
+
+    const $list = document.getElementById('cart-list');
+    const $empty = document.getElementById('empty');
+    const $summary = document.getElementById('summary');
+    const $subtotal = document.getElementById('subtotal');
+
+    function formatINR(n) {
+      try { return '₹' + Number(n).toLocaleString('en-IN'); } catch(e){ return '₹' + n; }
+    }
+
+    function renderCart() {
+      const cart = getCart();
+      $list.innerHTML = '';
+      if (!cart || cart.length === 0) {
+        $empty.style.display = 'block';
+        $summary.style.display = 'none';
+        return;
+      }
+      $empty.style.display = 'none';
+      $summary.style.display = 'block';
+
+      let total = 0;
+      cart.forEach((item) => {
+        const row = document.createElement('div');
+        row.className = 'cart-item';
+        const img = document.createElement('img');
+        img.src = item.image || '';
+        img.alt = item.name || 'Product';
+        const meta = document.createElement('div');
+        meta.className = 'meta';
+        const title = document.createElement('h4');
+        title.textContent = item.name || 'Item';
+        const price = document.createElement('div');
+        const p = (Number(item.price) || 0) * (Number(item.quantity) || 1);
+        total += p;
+        price.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center"><small style="color:var(--muted)">Qty: ${item.quantity || 1}</small><strong>${formatINR(p)}</strong></div>`;
+
+        const removeBtn = document.createElement('button');
+        removeBtn.className = 'btn ghost';
+        removeBtn.textContent = 'Remove';
+        removeBtn.addEventListener('click', () => {
+          removeItem(item.id);
+        });
+
+        meta.appendChild(title);
+        meta.appendChild(price);
+        meta.appendChild(removeBtn);
+
+        row.appendChild(img);
+        row.appendChild(meta);
+        $list.appendChild(row);
+      });
+
+      $subtotal.textContent = formatINR(total);
+    }
+
+    function removeItem(id) {
+      const cart = getCart().filter(i => i.id !== id);
+      saveCart(cart);
+      renderCart();
+    }
+
+    function clearCart() {
+      if (!confirm('Clear all items from your cart?')) return;
+      saveCart([]);
+      renderCart();
+    }
+
+    function checkout() {
+      const cart = getCart();
+      if (!cart.length) return alert('Your cart is empty.');
+      // For demo: we'll just clear the cart and show a message
+      alert('Thanks — checkout simulated. Cart cleared.');
+      saveCart([]);
+      renderCart();
+    }
+
+    document.getElementById('clear-btn').addEventListener('click', clearCart);
+    document.getElementById('buy-now-btn').addEventListener('click', () => window.location.href = 'checkout.html');
+    document.getElementById('continue-btn').addEventListener('click', () => window.close());
+    document.getElementById('close-btn').addEventListener('click', () => window.close());
+
+    // Update when localStorage changes in other windows
+    window.addEventListener('storage', (e) => {
+      if (!e.key) return;
+      const u = getCurrentUser();
+      if (!u) return;
+      if (e.key.startsWith(`velvet_cart:${u}`) || e.key === `velvet_cart:${u}_updated_at`) renderCart();
+    });
+
+    // Initial render
+    renderCart();
+  </script>
+</body>
+</html>

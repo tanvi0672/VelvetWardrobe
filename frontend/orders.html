@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>My Orders — VelvetWardrobe</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { padding: 1rem; background: var(--beige); }
+    .orders-container { max-width: 800px; margin: 0 auto; }
+    .orders-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+    .order-card { background: white; border-radius: var(--radius-md); padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: var(--shadow-md); border-left: 4px solid var(--gold); }
+    .order-header { display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem; }
+    .order-id { font-weight: 700; font-size: 1rem; color: var(--rich-black); }
+    .order-date { font-size: 0.85rem; color: var(--muted); }
+    .order-status { display: inline-block; padding: 0.4rem 0.8rem; border-radius: 999px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; background: rgba(81, 207, 102, 0.15); color: #146c43; }
+    .order-total { font-size: 1.2rem; font-weight: 700; color: var(--gold); }
+    .order-items { margin: 1rem 0; padding: 1rem 0; border-top: 1px solid rgba(0,0,0,0.06); border-bottom: 1px solid rgba(0,0,0,0.06); }
+    .order-item-row { display: flex; gap: 12px; margin-bottom: 0.8rem; }
+    .order-item-row img { width: 52px; height: 52px; object-fit: cover; border-radius: 4px; }
+    .item-details small { display: block; color: var(--muted); font-size: 0.8rem; }
+    .item-details strong { display: block; }
+    .order-delivery { background: rgba(212, 175, 55, 0.1); padding: 1rem; border-radius: var(--radius-sm); margin-top: 1rem; }
+    .delivery-label { font-weight: 600; color: var(--muted); font-size: 0.85rem; text-transform: uppercase; }
+    .delivery-value { color: var(--rich-black); margin-top: 0.4rem; }
+    .empty-state { text-align: center; padding: 3rem 1rem; color: var(--muted); }
+    .empty-state h2 { color: var(--rich-black); }
+    .btn { cursor: pointer; padding: 0.5rem 1rem; border-radius: 6px; border: none; }
+    .btn.ghost { background: none; border: 1px solid #aaa; color: #333; }
+    .btn.primary { background: var(--gold); color: white; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="orders-container">
+    <div class="orders-header">
+      
+      <h1 style="font-family: 'Playfair Display', serif; font-size: 1.8rem; margin: 0;">My Orders</h1>
+      <div style="flex: 1;"></div>
+      <button id="back-btn" class="icon-btn" aria-label="Back" title="Back" style="background:none;border:none;color:var(--gold);font-size:1.2rem;cursor:pointer;padding:0.25rem 0.5rem;">✕</button>
+    </div>
+
+    <div id="active-orders"></div>
+
+    <section id="cancelled-section" style="display:none; margin-top: 1.5rem;">
+      <h2 style="margin:0 0 0.8rem 0;">Cancelled Orders</h2>
+      <div id="cancelled-orders"></div>
+    </section>
+
+    <div id="empty-state" class="empty-state" style="display: none;">
+      <h2>No Orders Yet</h2>
+      <p>You haven't placed any orders yet. Start shopping now!</p>
+      <button onclick="window.location.href='index.html'" class="btn primary" style="margin-top: 1rem;">Continue Shopping</button>
+    </div>
+  </div>
+
+  <script>
+    function getCurrentUser() { return (localStorage.getItem('velvet_user') || '').trim(); }
+    function userKey(base, user) { return `${base}:${user}`; }
+    function getOrders(user) { try { return JSON.parse(localStorage.getItem(userKey('velvet_orders', user))) || []; } catch { return []; } }
+    function saveOrders(user, list) { localStorage.setItem(userKey('velvet_orders', user), JSON.stringify(list)); }
+    async function saveUserDataToServer(user, payload) {
+      if (!user) return;
+      try { await fetch(`/api/user/${encodeURIComponent(user)}/data`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }); }
+      catch (err) { console.warn('Failed to sync orders to server:', err); }
+    }
+
+    function renderOrders() {
+      const user = getCurrentUser();
+      const orders = user ? getOrders(user) : [];
+      const $active = document.getElementById('active-orders');
+      const $cancelledList = document.getElementById('cancelled-orders');
+      const $cancelledSection = document.getElementById('cancelled-section');
+      const $empty = document.getElementById('empty-state');
+
+      $active.innerHTML = '';
+      $cancelledList.innerHTML = '';
+
+      if (!orders.length) {
+        $empty.style.display = 'block';
+        $cancelledSection.style.display = 'none';
+        return;
+      }
+      $empty.style.display = 'none';
+
+      const activeOrders = orders.filter(o => (o.status || '').toLowerCase() !== 'cancelled');
+      const cancelledOrders = orders.filter(o => (o.status || '').toLowerCase() === 'cancelled');
+
+      // Active Orders
+      activeOrders.reverse().forEach(order => {
+        $active.appendChild(createOrderCard(order, false));
+      });
+
+      // Cancelled Orders
+      if (cancelledOrders.length) {
+        $cancelledSection.style.display = 'block';
+        cancelledOrders.reverse().forEach(order => {
+          $cancelledList.appendChild(createOrderCard(order, true));
+        });
+      } else {
+        $cancelledSection.style.display = 'none';
+      }
+    }
+
+    function createOrderCard(order, isCancelled) {
+      const card = document.createElement('div');
+      card.className = 'order-card';
+
+      let itemsHTML = '';
+      (order.items || []).forEach(item => {
+        itemsHTML += `
+          <div class="order-item-row">
+            <img src="${item.image || ''}" alt="${item.name || 'Product'}">
+            <div class="item-details" style="flex:1;">
+              <strong>${item.name}</strong>
+              <small>Size: ${item.size || 'N/A'} | Qty: ${item.quantity || 1} | ₹${(Number(item.price)||0).toLocaleString('en-IN')}</small>
+            </div>
+          </div>
+        `;
+      });
+
+      card.innerHTML = `
+        <div class="order-header">
+          <div>
+            <div class="order-id">${order.orderId}</div>
+            <div class="order-date">Ordered on ${order.orderDate}</div>
+          </div>
+          <div class="order-status">${isCancelled ? 'Cancelled' : order.status}</div>
+        </div>
+
+        <div class="order-items">${itemsHTML}</div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin:1rem 0;">
+          <span style="font-size:0.9rem; color:var(--muted);">Total:</span>
+          <div class="order-total">₹${(Number(order.total)||0).toLocaleString('en-IN')}</div>
+        </div>
+
+        <div class="order-delivery">
+          <div class="delivery-label">📍 Delivery Address</div>
+          <div class="delivery-value">${order.deliveryAddress}</div>
+          <div class="delivery-label" style="margin-top:0.8rem;">📅 Expected Delivery</div>
+          <div class="delivery-value">${order.deliveryDate}</div>
+          <div class="delivery-label" style="margin-top:0.8rem;">💳 Payment Method</div>
+          <div class="delivery-value">${order.paymentMethod}</div>
+        </div>
+
+        ${!isCancelled ? `<div style="margin-top:1rem; text-align:right;">
+          <button class="btn ghost cancel-order-btn" data-order-id="${order.orderId}">Cancel Order</button>
+        </div>` : ''}
+      `;
+
+      if (!isCancelled) {
+        card.querySelector('.cancel-order-btn').addEventListener('click', async () => {
+          const u = getCurrentUser();
+          const all = getOrders(u);
+          const idx = all.findIndex(o => o.orderId === order.orderId);
+          if (idx === -1) return;
+          all[idx].status = 'Cancelled';
+          saveOrders(u, all);
+          await saveUserDataToServer(u, { orders: all });
+          renderOrders();
+        });
+      }
+
+      return card;
+    }
+
+    renderOrders();
+    window.addEventListener('storage', () => renderOrders());
+
+    // Back button handler with fallback: go back if possible, otherwise go to index
+    document.getElementById('back-btn').addEventListener('click', () => {
+      try {
+        if (window.history.length > 1) {
+          window.history.back();
+        } else {
+          window.location.href = 'index.html';
+        }
+      } catch (err) {
+        window.location.href = 'index.html';
+      }
+    });
+  </script>
+</body>
+</html>

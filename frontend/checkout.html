@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Checkout — VelvetWardrobe</title>
+  <style>
+    body { padding: 1rem; background: #f9f5f1; font-family: sans-serif; }
+    .checkout-container { max-width: 680px; margin: 0 auto; }
+    .checkout-section { background: white; border-radius: 8px; padding: 1.5rem; margin-bottom: 1rem; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    .section-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem; }
+    .order-item { display: flex; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.06); }
+    .order-item img { width: 64px; height: 64px; object-fit: cover; border-radius: 6px; }
+    .item-meta h4 { margin: 0 0 4px 0; font-size: 0.95rem; }
+    .item-meta small { color: #777; display: block; }
+    .order-summary { display: grid; gap: 8px; margin-top: 1rem; }
+    .summary-row { display: flex; justify-content: space-between; }
+    .summary-row.total { font-weight: 700; font-size: 1.1rem; border-top: 2px solid rgba(0,0,0,0.1); padding-top: 8px; }
+    .form-group { display: grid; gap: 6px; margin-bottom: 1.2rem; }
+    .form-group label { font-weight: 600; font-size: 0.85rem; color: #555; }
+    .form-group input { padding: 0.7rem; border: 1px solid #ccc; border-radius: 4px; }
+    .payment-method { padding: 1rem; border: 2px solid #d4af37; border-radius: 4px; background: rgba(212, 175, 55, 0.05); }
+    .checkout-actions { display: grid; gap: 1rem; margin-top: 1.5rem; }
+    .btn { padding: 0.85rem 1rem; cursor: pointer; border: none; border-radius: 4px; font-weight: 600; }
+    .btn.primary { background: #d4af37; color: white; }
+    .btn.ghost { background: #eee; color: #333; }
+  </style>
+</head>
+<body>
+  <div class="checkout-container">
+    <h1 style="font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 1.5rem;">Checkout</h1>
+
+    <!-- Order Summary -->
+    <div class="checkout-section">
+      <div class="section-title">Order Summary</div>
+      <div id="order-items"></div>
+      <div class="order-summary">
+        <div class="summary-row"><span>Subtotal:</span><span id="subtotal">₹0</span></div>
+        <div class="summary-row"><span>Shipping:</span><span>Free</span></div>
+        <div class="summary-row total"><span>Total:</span><span id="total">₹0</span></div>
+      </div>
+    </div>
+
+    <!-- Delivery Address -->
+    <div class="checkout-section">
+      <div class="section-title">Delivery Address</div>
+      <form id="address-form">
+        <div class="form-group">
+          <label for="fname">Full Name *</label>
+          <input type="text" id="fname" name="fname" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email *</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number *</label>
+          <input type="tel" id="phone" name="phone" placeholder="+91 XXXXX XXXXX" required>
+        </div>
+        <div class="form-group">
+          <label for="address">Address Line 1 *</label>
+          <input type="text" id="address" name="address" placeholder="Street address" required>
+        </div>
+        <div class="form-group">
+          <label for="city">City *</label>
+          <input type="text" id="city" name="city" required>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label for="state">State *</label>
+            <input type="text" id="state" name="state" required>
+          </div>
+          <div class="form-group">
+            <label for="zip">Postal Code *</label>
+            <input type="text" id="zip" name="zip" required>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Payment Method -->
+    <div class="checkout-section">
+      <div class="section-title">Payment Method</div>
+      <div class="payment-method">
+        <strong>Cash on Delivery (COD)</strong>
+        <p style="margin:0.5rem 0 0 0; color:#555; font-size:0.9rem;">Pay with cash when the order is delivered.</p>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="checkout-section">
+      <div class="checkout-actions">
+        <button id="place-order-btn" class="btn primary">Place Order</button>
+        <button id="back-btn" class="btn ghost">Back to Cart</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ===== User & Storage Utilities =====
+    function getCurrentUser() { return localStorage.getItem('velvet_user') || ''; }
+    function userKey(base, user) { return `${base}:${user}`; }
+
+    function getCart(user = getCurrentUser()) {
+      try { return JSON.parse(localStorage.getItem(userKey('velvet_cart', user))) || []; }
+      catch (e) { return []; }
+    }
+    function getOrders(user = getCurrentUser()) {
+      try { return JSON.parse(localStorage.getItem(userKey('velvet_orders', user))) || []; }
+      catch (e) { return []; }
+    }
+    function saveOrders(user, list) { localStorage.setItem(userKey('velvet_orders', user), JSON.stringify(list)); }
+
+    function renderOrderSummary() {
+      const cart = getCart();
+      const $items = document.getElementById('order-items');
+      $items.innerHTML = '';
+      let total = 0;
+
+      if (!cart.length) {
+        $items.innerHTML = '<p style="color:#777;">Your cart is empty.</p>';
+        document.getElementById('subtotal').textContent = '₹0';
+        document.getElementById('total').textContent = '₹0';
+        return;
+      }
+
+      cart.forEach(item => {
+        const price = Number(item.price) || 0;
+        const quantity = Number(item.quantity) || 1;
+        const itemTotal = price * quantity;
+        total += itemTotal;
+
+        const row = document.createElement('div');
+        row.className = 'order-item';
+        row.innerHTML = `
+          <img src="${item.image || ''}" alt="${item.name || 'Product'}">
+          <div class="item-meta" style="flex:1;">
+            <h4>${item.name || 'Item'}</h4>
+            <small>Size: ${item.size || 'N/A'} | Qty: ${quantity}</small>
+            <small>₹${price.toLocaleString('en-IN')} × ${quantity}</small>
+          </div>
+          <div style="text-align:right; font-weight:600;">₹${itemTotal.toLocaleString('en-IN')}</div>
+        `;
+        $items.appendChild(row);
+      });
+
+      document.getElementById('subtotal').textContent = '₹' + total.toLocaleString('en-IN');
+      document.getElementById('total').textContent = '₹' + total.toLocaleString('en-IN');
+    }
+
+    function calculateDeliveryDate() {
+      const d = new Date();
+      d.setDate(d.getDate() + 3);
+      return d.toLocaleDateString('en-IN', { year:'numeric', month:'long', day:'numeric' });
+    }
+
+    function placeOrder() {
+      const fname = document.getElementById('fname').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const address = document.getElementById('address').value.trim();
+      const city = document.getElementById('city').value.trim();
+      const state = document.getElementById('state').value.trim();
+      const zip = document.getElementById('zip').value.trim();
+
+      if (!fname || !email || !phone || !address || !city || !state || !zip) {
+        alert('Please fill in all fields.');
+        return;
+      }
+
+      const currentUser = getCurrentUser() || email;
+      const cart = getCart(currentUser);
+
+      if (!cart.length) {
+        alert('Your cart is empty.');
+        return;
+      }
+
+      const subtotal = cart.reduce((sum, item) => sum + ((Number(item.price)||0)*(Number(item.quantity)||1)), 0);
+      const orderId = 'ORD' + Date.now().toString(36).toUpperCase();
+      const deliveryDate = calculateDeliveryDate();
+
+      const order = {
+        orderId, name: fname, email, phone,
+        deliveryAddress: `${address}, ${city}, ${state} ${zip}`,
+        items: cart, total: subtotal, paymentMethod: 'COD',
+        orderDate: new Date().toLocaleDateString('en-IN'),
+        deliveryDate, status: 'Confirmed'
+      };
+
+      const orders = getOrders(currentUser);
+      orders.push(order);
+      saveOrders(currentUser, orders);
+
+      // Clear cart
+      localStorage.setItem(userKey('velvet_cart', currentUser), JSON.stringify([]));
+      alert(`✓ Order Confirmed!\nOrder ID: ${order.orderId}\nDelivery: ${order.deliveryAddress}\nDate: ${order.deliveryDate}`);
+      window.location.href = 'orders.html';
+    }
+
+    document.getElementById('place-order-btn').addEventListener('click', placeOrder);
+    document.getElementById('back-btn').addEventListener('click', () => window.history.back());
+
+    renderOrderSummary();
+  </script>
+</body>
+</html>

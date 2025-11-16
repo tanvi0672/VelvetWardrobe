@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Product Details — VelvetWardrobe</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { padding: 1rem; background: var(--beige); }
+    .detail-container { max-width: 720px; margin: 0 auto; }
+    .detail-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+    .detail-content { background: white; border-radius: var(--radius-md); padding: 2rem; box-shadow: var(--shadow-md); }
+    .detail-image { width: 100%; height: auto; max-height: 380px; object-fit: cover; border-radius: var(--radius-md); margin-bottom: 1.5rem; }
+    .detail-info h1 { font-family: 'Playfair Display', serif; font-size: 2rem; margin: 0 0 0.5rem 0; }
+    .detail-price { font-size: 1.4rem; font-weight: 700; background: linear-gradient(135deg, var(--gold) 0%, var(--rose-gold) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 1rem; }
+    .detail-form { display: grid; gap: 1.2rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-group label { font-weight: 600; font-size: 0.9rem; text-transform: uppercase; color: var(--muted); }
+    .form-group select, .form-group input { padding: 0.7rem; border: 1px solid rgba(0,0,0,0.1); border-radius: var(--radius-sm); font-family: inherit; background: white; }
+    .form-group select:focus, .form-group input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-soft); }
+    .detail-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem; }
+    .detail-buttons .btn { padding: 0.85rem 1rem; }
+    @media (max-width: 640px) {
+      .detail-buttons { grid-template-columns: 1fr; }
+      .detail-info h1 { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="detail-container">
+    <div class="detail-header">
+      <h2>Product Details</h2>
+      <button id="close-btn" class="icon-btn" aria-label="Close">✕</button>
+    </div>
+
+    <div class="detail-content">
+      <img id="detail-image" class="detail-image" src="" alt="Product">
+      
+      <div class="detail-info">
+        <h1 id="detail-name">Product Name</h1>
+        <div class="detail-price" id="detail-price">₹0</div>
+        
+        <form id="detail-form" class="detail-form">
+          <div class="form-group">
+            <label for="size-select">Size</label>
+            <select id="size-select" required>
+              <option value="">Select Size</option>
+              <option value="XS">XS</option>
+              <option value="S">S</option>
+              <option value="M">M</option>
+              <option value="L">L</option>
+              <option value="XL">XL</option>
+              <option value="XXL">XXL</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="qty-input">Quantity</label>
+            <input type="number" id="qty-input" value="1" min="1" max="10" required>
+          </div>
+
+          <div class="detail-buttons">
+            <button type="button" id="add-to-cart-btn" class="btn primary">Add to Cart</button>
+            <button type="button" id="buy-now-btn" class="btn ghost">Buy Now</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const name = decodeURIComponent(params.get('name') || 'Product');
+    const priceRaw = params.get('price') || '0';
+    const image = decodeURIComponent(params.get('image') || '');
+    const price = parseFloat(priceRaw.replace(/[^0-9.]/g, '')) || 0;
+
+    document.getElementById('detail-name').textContent = name;
+    document.getElementById('detail-price').textContent = '₹' + (Number(price) || 0).toLocaleString('en-IN');
+    document.getElementById('detail-image').src = image;
+
+    // User-scoped storage helpers
+    function getCurrentUser() { return (localStorage.getItem('velvet_user') || '').trim(); }
+    function userKey(base, user) { return `${base}:${user}`; }
+
+    function getCart() {
+      const user = getCurrentUser();
+      const key = user ? userKey('velvet_cart', user) : 'velvet_cart';
+      try { return JSON.parse(localStorage.getItem(key)) || []; } catch (e) { return []; }
+    }
+    function saveCart(list) {
+      const user = getCurrentUser();
+      const key = user ? userKey('velvet_cart', user) : 'velvet_cart';
+      localStorage.setItem(key, JSON.stringify(list));
+      try { localStorage.setItem(key + '_updated_at', Date.now()); } catch (e) {}
+      // Sync to backend if user is logged in
+      if (user) {
+        fetch(`/api/user/${encodeURIComponent(user)}/data`, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ cart: list })
+        }).catch(() => {});
+      }
+    }
+
+    function addToCart() {
+      const size = document.getElementById('size-select').value;
+      if (!size) { alert('Please select a size.'); return; }
+      const qty = parseInt(document.getElementById('qty-input').value) || 1;
+      
+      const item = { name, price, image, size, quantity: qty, id: Date.now().toString(36) + Math.random().toString(36).slice(2, 8) };
+      const cart = getCart();
+      cart.push(item);
+      saveCart(cart);
+      alert(`${name} added to cart!`);
+      window.close();
+    }
+
+    function buyNow() {
+      const size = document.getElementById('size-select').value;
+      if (!size) { alert('Please select a size.'); return; }
+      const qty = parseInt(document.getElementById('qty-input').value) || 1;
+      
+      // Clear cart and add this item
+      const item = { name, price, image, size, quantity: qty, id: Date.now().toString(36) + Math.random().toString(36).slice(2, 8) };
+      saveCart([item]);
+      
+      // Open checkout
+      window.location.href = 'checkout.html';
+    }
+
+    document.getElementById('add-to-cart-btn').addEventListener('click', addToCart);
+    document.getElementById('buy-now-btn').addEventListener('click', buyNow);
+    document.getElementById('close-btn').addEventListener('click', () => window.close());
+  </script>
+</body>
+</html>

@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VelvetWardrobe | Luxury Fashion for Everyone</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://kit.fontawesome.com/72c9feb7dc.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="top-bar">
+      <a href="#home" class="logo" aria-label="VelvetWardrobe homepage">
+        <div class="logo-image">
+          <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="50" height="50" rx="12" fill="url(#logoGradient)"/>
+            <path d="M25 12L20 20H18C16.8954 20 16 20.8954 16 22V38C16 39.1046 16.8954 40 18 40H32C33.1046 40 34 39.1046 34 38V22C34 20.8954 33.1046 20 32 20H30L25 12Z" fill="white" opacity="0.9"/>
+            <path d="M20 20L25 28L30 20" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            <defs>
+              <linearGradient id="logoGradient" x1="0" y1="0" x2="50" y2="50" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#d4af37"/>
+                <stop offset="50%" stop-color="#e8b4a0"/>
+                <stop offset="100%" stop-color="#8b6f9e"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <span class="logo-text">Velvet<span>Wardrobe</span></span>
+      </a>
+      <div class="search-container">
+        <input type="search" id="site-search" placeholder="Search for trends, brands or essentials…" aria-label="Search products">
+        <button class="btn primary" id="search-btn">Search</button>
+      </div>
+      <div class="action-buttons">
+        <button class="icon-btn" id="share-btn" aria-label="Share VelvetWardrobe">
+          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111111'%3E%3Cpath d='M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z'/%3E%3C/svg%3E" alt="Share" class="icon-img">
+        </button>
+        <a href="favorites.html" class="icon-btn" id="header-favorites" aria-label="View favourites" target="_blank" rel="noopener">
+          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111111'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E" alt="Favorites" class="icon-img">
+        </a>
+        <button class="icon-btn" id="header-cart" aria-label="View shopping cart">
+          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111111'%3E%3Cpath d='M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.15.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.41 1.75-1.03L21.7 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z'/%3E%3C/svg%3E" alt="Cart" class="icon-img">
+        </button>
+      </div>
+    </div>
+    <nav class="main-nav" aria-label="Primary">
+      <a href="#home">Home</a>
+      <a href="#mens">Men's Wear</a>
+      <a href="#womens">Women's Wear</a>
+      <a href="#kids">Kids</a>
+      <a href="#favorites">Favourites</a>
+      <a href="#contact">Feedback</a>
+      <a href="orders.html" target="_blank" rel="noopener">My Orders</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="hero">
+      <div class="hero-slider">
+        <article class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1475180098004-ca77a66827be?auto=format&fit=crop&w=1600&q=80');">
+          <div class="hero-content">
+            <span class="eyebrow">New Season • New Mood</span>
+            <h1>Elevate Your Signature Style</h1>
+            <p>Discover curated designer looks and everyday essentials crafted for timeless elegance.</p>
+            <div class="hero-actions">
+              <a href="#womens" class="btn primary">Explore Women’s Wear</a>
+              <a href="#mens" class="btn ghost">Shop Men’s Edit</a>
+            </div>
+          </div>
+        </article>
+        <article class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1600&q=80');">
+          <div class="hero-content">
+            <span class="eyebrow">Tailored Exclusives</span>
+            <h1>Modern Pieces with Classic Charm</h1>
+            <p>Versatile staples and statement pieces designed to move seamlessly through your day.</p>
+            <div class="hero-actions">
+              <a href="#mens" class="btn primary">Discover Men’s Suits</a>
+              <a href="#favorites" class="btn ghost">View Favourites</a>
+            </div>
+          </div>
+        </article>
+        <article class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1521579971123-1192931a1452?auto=format&fit=crop&w=1600&q=80');">
+          <div class="hero-content">
+            <span class="eyebrow">Family Moments</span>
+            <h1>Luxury Comfort for Every Generation</h1>
+            <p>From playful kidswear to luxurious lounge sets—dress your family in coordinated style.</p>
+            <div class="hero-actions">
+              <a href="#kids" class="btn primary">Browse Kids’ Collection</a>
+              <a href="#registration" class="btn ghost">Join VelvetWardrobe</a>
+            </div>
+          </div>
+        </article>
+      </div>
+      <div class="hero-indicators" role="tablist" aria-label="Collection highlights">
+        <button class="indicator active" data-slide="0" aria-label="Slide 1"></button>
+        <button class="indicator" data-slide="1" aria-label="Slide 2"></button>
+        <button class="indicator" data-slide="2" aria-label="Slide 3"></button>
+      </div>
+    </section>
+
+    <section id="favorites" class="section highlight">
+      <div class="section-header">
+        <span class="eyebrow">Velvet curated</span>
+        <h2>Featured Favourites</h2>
+        <p>Handpicked looks that our stylists are obsessing over right now.</p>
+      </div>
+    
+      <div class="product-grid">
+        <article class="product-card" data-name="Sherwani" data-price="52,289">
+          <img src="https://dulherajalabel.com/cdn/shop/files/153_27ecc991-4979-4eee-8747-f1b2605511d8.jpg?v=1730623494" alt="Sherwani">
+          <div class="product-info">
+            <h3>Sherwani</h3>
+            <p class="price">₹52,289</p>
+            <div class="product-actions">
+  <div class="product-icons">
+    <!-- Add to Cart -->
+    <button class="icon-circle add-to-cart" aria-label="Add to Cart">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111111'%3E%3Cpath d='M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.15.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.41 1.75-1.03L21.7 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z'/%3E%3C/svg%3E"
+        alt="Cart" class="icon-img">
+    </button>
+
+    <!-- Share -->
+    <button class="icon-circle share-product" aria-label="Share Product">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111111'%3E%3Cpath d='M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z'/%3E%3C/svg%3E"
+        alt="Share" class="icon-img">
+    </button>
+
+    <!-- Favorite -->
+    <button class="icon-circle toggle-favorite" aria-label="Add to favourites">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111111'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E"
+        alt="Favorite" class="icon-img">
+    </button>
+  </div>
+</div>
+
+
+          </div>
+        </article>
+        <article class="product-card" data-name="Wedding Lehanga" data-price="1,49,999">
+          <img src="https://medias.utsavfashion.com/blog/wp-content/uploads/2024/01/Posing-Tips.jpg" alt="Wedding Lehanga">
+          <div class="product-info">
+            <h3>Wedding Lehanga</h3>
+            <p class="price">₹1,49,999</p>
+            <div class="product-actions">
+  <div class="product-icons">
+    <!-- Add to Cart -->
+    <button class="icon-circle add-to-cart" aria-label="Add to Cart">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111111'%3E%3Cpath d='M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.15.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.41 1.75-1.03L21.7 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z'/%3E%3C/svg%3E"
+        alt="Cart" class="icon-img">
+    </button>
+
+    <!-- Share -->
+    <button class="icon-circle share-product" aria-label="Share Product">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111111'%3E%3Cpath d='M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z'/%3E%3C/svg%3E"
+        alt="Share" class="icon-img">
+    </button>
+
+    <!-- Favorite -->
+    <button class="icon-circle toggle-favorite" aria-label="Add to favourites">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111111'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E"
+        alt="Favorite" class="icon-img">
+    </button>
+  </div>
+</div>
+
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="mens" class="section">
+      <div class="section-header">
+        <span class="eyebrow">Men’s Wear</span>
+        <h2>Refined Essentials for Him</h2>
+        <p>Elevate every occasion with precision tailoring and effortless streetwear staples.</p>
+      </div>
+      <div class="product-grid">
+        <article class="product-card" data-name="Cashmere Overcoat" data-price="₹4,900">
+          <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=800&q=80" alt="Cashmere overcoat">
+          <div class="product-info">
+            <h3>Cashmere Overcoat</h3>
+            <p class="price">₹4,900</p>
+            <div class="product-actions">
+  <div class="product-icons">
+    <!-- Add to Cart -->
+    <button class="icon-circle add-to-cart" aria-label="Add to Cart">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111111'%3E%3Cpath d='M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.15.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.41 1.75-1.03L21.7 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z'/%3E%3C/svg%3E"
+        alt="Cart" class="icon-img">
+    </button>
+
+    <!-- Share -->
+    <button class="icon-circle share-product" aria-label="Share Product">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111111'%3E%3Cpath d='M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z'/%3E%3C/svg%3E"
+        alt="Share" class="icon-img">
+    </button>
+
+    <!-- Favorite -->
+    <button class="icon-circle toggle-favorite" aria-label="Add to favourites">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111111'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E"
+        alt="Favorite" class="icon-img">
+    </button>
+  </div>
+</div>
+
+          </div>
+        </article>
+        <article class="product-card" data-name="Velvet Bomber Jacket" data-price="₹2,999">
+          <img src="https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=800&q=80" alt="Velvet bomber jacket">
+          <div class="product-info">
+            <h3>Velvet Bomber Jacket</h3>
+            <p class="price">₹2,999</p>
+           <div class="product-actions">
+  <div class="product-icons">
+    <!-- Add to Cart -->
+    <button class="icon-circle add-to-cart" aria-label="Add to Cart">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111111'%3E%3Cpath d='M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.15.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.41 1.75-1.03L21.7 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z'/%3E%3C/svg%3E"
+        alt="Cart" class="icon-img">
+    </button>
+
+    <!-- Share -->
+    <button class="icon-circle share-product" aria-label="Share Product">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111111'%3E%3Cpath d='M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z'/%3E%3C/svg%3E"
+        alt="Share" class="icon-img">
+    </button>
+
+    <!-- Favorite -->
+    <button class="icon-circle toggle-favorite" aria-label="Add to favourites">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111111'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E"
+        alt="Favorite" class="icon-img">
+    </button>
+  </div>
+</div>
+
+          </div>
+        </article>
+        <article class="product-card" data-name="Men's Hoodiee" data-price="₹999">
+          <img src="https://images.meesho.com/images/products/453859801/frxjb_512.webp?width=512" alt="Men's Hoodiee">
+          <div class="product-info">
+            <h3>Men's Hoodiee</h3>
+            <p class="price">₹999</p>
+            <div class="product-actions">
+  <div class="product-icons">
+    <!-- Add to Cart -->
+    <button class="icon-circle add-to-cart" aria-label="Add to Cart">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111111'%3E%3Cpath d='M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.15.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.41 1.75-1.03L21.7 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z'/%3E%3C/svg%3E"
+        alt="Cart" class="icon-img">
+    </button>
+
+    <!-- Share -->
+    <button class="icon-circle share-product" aria-label="Share Product">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111111'%3E%3Cpath d='M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z'/%3E%3C/svg%3E"
+        alt="Share" class="icon-img">
+    </button>
+
+    <!-- Favorite -->
+    <button class="icon-circle toggle-favorite" aria-label="Add to favourites">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111111'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E"
+        alt="Favorite" class="icon-img">
+    </button>
+  </div>
+</div>
+
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="womens" class="section">
+      <div class="section-header">
+        <span class="eyebrow">Women’s Wear</span>
+        <h2>Luxury Layers for Her</h2>
+        <p>Discover couture-inspired silhouettes, intricate textures, and luxurious finishes.</p>
+      </div>
+      <div class="product-grid">
+        <article class="product-card" data-name="Indo Western Fits" data-price="₹2,675">
+          <img src="https://mysanskritam.com/cdn/shop/files/95_533x.jpg?v=1750922723" alt="Indo Western Fits">
+          <div class="product-info">
+            <h3>Indo Western Fits</h3>
+            <p class="price">₹2,675</p>
+            <div class="product-actions">
+  <div class="product-icons">
+    <!-- Add to Cart -->
+    <button class="icon-circle add-to-cart" aria-label="Add to Cart">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111111'%3E%3Cpath d='M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.15.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.41 1.75-1.03L21.7 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z'/%3E%3C/svg%3E"
+        alt="Cart" class="icon-img">
+    </button>
+
+    <!-- Share -->
+    <button class="icon-circle share-product" aria-label="Share Product">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111111'%3E%3Cpath d='M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z'/%3E%3C/svg%3E"
+        alt="Share" class="icon-img">
+    </button>
+
+    <!-- Favorite -->
+    <button class="icon-circle toggle-favorite" aria-label="Add to favourites">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111111'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E"
+        alt="Favorite" class="icon-img">
+    </button>
+  </div>
+</div>
+
+          </div>
+        </article>
+        <article class="product-card" data-name="Kurti Satin Set" data-price="₹1,998">
+          <img src="https://www.fashionfloorindia.com/cdn/shop/files/Screenshot-20231128_175643.jpg?v=1751609507&width=1946" alt=" Kurti Satin Set">
+          <div class="product-info">
+            <h3>Kurti Satin Set</h3>
+            <p class="price">₹1,998</p>
+            <div class="product-actions">
+  <div class="product-icons">
+    <!-- Add to Cart -->
+    <button class="icon-circle add-to-cart" aria-label="Add to Cart">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111111'%3E%3Cpath d='M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.15.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.41 1.75-1.03L21.7 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z'/%3E%3C/svg%3E"
+        alt="Cart" class="icon-img">
+    </button>
+
+    <!-- Share -->
+    <button class="icon-circle share-product" aria-label="Share Product">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111111'%3E%3Cpath d='M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z'/%3E%3C/svg%3E"
+        alt="Share" class="icon-img">
+    </button>
+
+    <!-- Favorite -->
+    <button class="icon-circle toggle-favorite" aria-label="Add to favourites">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111111'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E"
+        alt="Favorite" class="icon-img">
+    </button>
+  </div>
+</div>
+
+          </div>
+        </article>
+        <article class="product-card" data-name="Denim Jacket" data-price="₹3,599">
+          <img src="https://images-eu.ssl-images-amazon.com/images/I/51K679LP8ZL._AC_UL600_SR600,600_.jpg" alt="Denim Jacket">
+          <div class="product-info">
+            <h3>Denim Jacket</h3>
+            <p class="price">₹3,599</p>
+            <div class="product-actions">
+  <div class="product-icons">
+    <!-- Add to Cart -->
+    <button class="icon-circle add-to-cart" aria-label="Add to Cart">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111111'%3E%3Cpath d='M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.15.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.41 1.75-1.03L21.7 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z'/%3E%3C/svg%3E"
+        alt="Cart" class="icon-img">
+    </button>
+
+    <!-- Share -->
+    <button class="icon-circle share-product" aria-label="Share Product">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111111'%3E%3Cpath d='M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z'/%3E%3C/svg%3E"
+        alt="Share" class="icon-img">
+    </button>
+
+    <!-- Favorite -->
+    <button class="icon-circle toggle-favorite" aria-label="Add to favourites">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111111'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E"
+        alt="Favorite" class="icon-img">
+    </button>
+  </div>
+</div>
+
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="kids" class="section">
+      <div class="section-header">
+        <span class="eyebrow">Kids Collection</span>
+        <h2>Playful Styles for Little Trendsetters</h2>
+        <p>Cozy layers, breathable fabrics, and whimsical designs for unforgettable moments.</p>
+      </div>
+      <div class="product-grid">
+        <article class="product-card" data-name="Floral One-Piece" data-price="₹2,499">
+          <img src="https://www.fayonkids.com/cdn/shop/files/manufactured-by-fayon-kids-noida-u-p-baby-pink-embroidered-top-with-plazzo-pant-40923371045120.jpg?v=1756713861&width=533" alt="Floral One-Piece ">
+          <div class="product-info">
+            <h3>Floral One-Piece</h3>
+            <p class="price">₹2,499</p>
+            <div class="product-actions">
+  <div class="product-icons">
+    <!-- Add to Cart -->
+    <button class="icon-circle add-to-cart" aria-label="Add to Cart">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111111'%3E%3Cpath d='M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.15.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.41 1.75-1.03L21.7 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z'/%3E%3C/svg%3E"
+        alt="Cart" class="icon-img">
+    </button>
+
+    <!-- Share -->
+    <button class="icon-circle share-product" aria-label="Share Product">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111111'%3E%3Cpath d='M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z'/%3E%3C/svg%3E"
+        alt="Share" class="icon-img">
+    </button>
+
+    <!-- Favorite -->
+    <button class="icon-circle toggle-favorite" aria-label="Add to favourites">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111111'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E"
+        alt="Favorite" class="icon-img">
+    </button>
+  </div>
+</div>
+
+          </div>
+        </article>
+        <article class="product-card" data-name="Kurta Set" data-price="₹4,999">
+          <img src="https://images.meesho.com/images/products/566449490/xibyt_512.webp?width=512" alt="Kurta Set">
+          <div class="product-info">
+            <h3>Kurta Set</h3>
+            <p class="price">₹4,999</p>
+            <div class="product-actions">
+  <div class="product-icons">
+    <!-- Add to Cart -->
+    <button class="icon-circle add-to-cart" aria-label="Add to Cart">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111111'%3E%3Cpath d='M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.15.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.41 1.75-1.03L21.7 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z'/%3E%3C/svg%3E"
+        alt="Cart" class="icon-img">
+    </button>
+
+    <!-- Share -->
+    <button class="icon-circle share-product" aria-label="Share Product">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111111'%3E%3Cpath d='M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z'/%3E%3C/svg%3E"
+        alt="Share" class="icon-img">
+    </button>
+
+    <!-- Favorite -->
+    <button class="icon-circle toggle-favorite" aria-label="Add to favourites">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111111'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E"
+        alt="Favorite" class="icon-img">
+    </button>
+  </div>
+</div>
+
+          </div>
+        </article>
+        <article class="product-card" data-name="Festive Party Dress" data-price="₹1,499">
+          <img src="https://i.etsystatic.com/16000582/r/il/6b4ace/1851670718/il_570xN.1851670718_qpmb.jpg" alt="Festive party dress ">
+          <div class="product-info">
+            <h3>Festive Party Dress</h3>
+            <p class="price">₹1,499</p>
+            <div class="product-actions">
+  <div class="product-icons">
+    <!-- Add to Cart -->
+    <button class="icon-circle add-to-cart" aria-label="Add to Cart">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111111'%3E%3Cpath d='M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.15.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.41 1.75-1.03L21.7 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z'/%3E%3C/svg%3E"
+        alt="Cart" class="icon-img">
+    </button>
+
+    <!-- Share -->
+    <button class="icon-circle share-product" aria-label="Share Product">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111111'%3E%3Cpath d='M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z'/%3E%3C/svg%3E"
+        alt="Share" class="icon-img">
+    </button>
+
+    <!-- Favorite -->
+    <button class="icon-circle toggle-favorite" aria-label="Add to favourites">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111111'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E"
+        alt="Favorite" class="icon-img">
+    </button>
+  </div>
+</div>
+
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="feedback" class="section alternate">
+  <div class="section-header">
+    <span class="eyebrow">We Value Your Thoughts</span>
+    <h2>Feedback Form</h2>
+    <p>Your feedback helps us improve and serve you better.</p>
+  </div>
+
+  <form id="feedback-form" class="form-card" novalidate>
+    <div class="form-row">
+      <label for="feedback-name">Full Name</label>
+      <input type="text" id="feedback-name" name="name" placeholder="Alexandra Maxine" required>
+    </div>
+
+    <div class="form-row">
+      <label for="feedback-email">Email</label>
+      <input type="email" id="feedback-email" name="email" placeholder="alexandra@example.com" required>
+    </div>
+
+    <div class="form-row">
+      <label for="feedback-rating">Rating (1–5)</label>
+      <input type="number" id="feedback-rating" name="rating" min="1" max="5" placeholder="5" required>
+    </div>
+
+    <div class="form-row">
+      <label for="feedback-message">Feedback</label>
+      <textarea id="feedback-message" name="message" rows="5" placeholder="Share your experience with us..." required></textarea>
+    </div>
+
+    <button type="submit" class="btn primary wide">Submit Feedback</button>
+    <p class="form-feedback" aria-live="polite"></p>
+  </form>
+</section>
+
+
+      </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="#home" class="logo">
+          <div class="logo-image">
+            <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="50" height="50" rx="12" fill="url(#logoGradient2)"/>
+              <path d="M25 12L20 20H18C16.8954 20 16 20.8954 16 22V38C16 39.1046 16.8954 40 18 40H32C33.1046 40 34 39.1046 34 38V22C34 20.8954 33.1046 20 32 20H30L25 12Z" fill="white" opacity="0.9"/>
+              <path d="M20 20L25 28L30 20" stroke="white" stroke-width="2" stroke-linecap="round"/>
+              <defs>
+                <linearGradient id="logoGradient2" x1="0" y1="0" x2="50" y2="50" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#d4af37"/>
+                  <stop offset="50%" stop-color="#e8b4a0"/>
+                  <stop offset="100%" stop-color="#8b6f9e"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <span class="logo-text">Velvet<span>Wardrobe</span></span>
+        </a>
+        <p>Distinctive fashion curated with artistry and heart. Designed in London, crafted for the world.</p>
+      </div>
+      <div class="footer-links">
+        <h3>Shop</h3>
+        <a href="#mens">Men’s Wear</a>
+        <a href="#womens">Women’s Wear</a>
+        <a href="#kids">Kids</a>
+        <a href="#favorites">Favourites</a>
+      </div>
+      <div class="footer-links">
+        <h3>Support</h3>
+        <a href="#contact">Contact</a>
+        <a href="#registration">Membership</a>
+        <a href="#home">Shipping & Returns</a>
+        <a href="#home">Gift Cards</a>
+      </div>
+      <div class="footer-social">
+        <h3>Follow Us</h3>
+        <div class="social-icons">
+          <a href="https://www.instagram.com" target="_blank" rel="noopener" aria-label="Instagram" class="social-link instagram">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23E4405F' d='M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z'/%3E%3C/svg%3E" alt="Instagram" class="social-icon-img">
+          </a>
+          <a href="https://www.pinterest.com" target="_blank" rel="noopener" aria-label="Pinterest" class="social-link pinterest">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23BD081C' d='M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.403.041-3.441.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z'/%3E%3C/svg%3E" alt="Pinterest" class="social-icon-img">
+          </a>
+          <a href="https://www.facebook.com" target="_blank" rel="noopener" aria-label="Facebook" class="social-link facebook">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%231877F2' d='M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z'/%3E%3C/svg%3E" alt="Facebook" class="social-icon-img">
+          </a>
+          <a href="https://www.twitter.com" target="_blank" rel="noopener" aria-label="Twitter" class="social-link twitter">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%231DA1F2' d='M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z'/%3E%3C/svg%3E" alt="Twitter" class="social-icon-img">
+          </a>
+          <a href="https://www.youtube.com" target="_blank" rel="noopener" aria-label="YouTube" class="social-link youtube">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23FF0000' d='M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z'/%3E%3C/svg%3E" alt="YouTube" class="social-icon-img">
+          </a>
+          <a href="https://www.tiktok.com" target="_blank" rel="noopener" aria-label="TikTok" class="social-link tiktok">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000000' d='M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z'/%3E%3C/svg%3E" alt="TikTok" class="social-icon-img">
+          </a>
+        </div>
+      </div>
+    </div>
+    <p class="footer-base">© <span id="year"></span> VelvetWardrobe. All rights reserved.</p>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="assertive"></div>
+  <input type="text" id="username" placeholder="Enter your name">
+<button onclick="sendData()">Send to Backend</button>
+<p id="result" style="color:blue; font-size: 18px;"></p>
+<script src="script.js"></script>
+</body>
+</html>
+
